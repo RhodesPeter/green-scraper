@@ -1,75 +1,66 @@
-// (async () => {
-//   const resonse = await fetch('https://bbc.co.uk');
-//   const text = await resonse.text();
-//   console.log(text.match(/(?<=\<h1>).*(?=\<\/h1>)/));
-// })()
-
-
 const https = require('https');
 const $ = require('cheerio');
 const fs = require('fs');
 
-const greenWords = [
-  'wind turbine',
-  'wind power',
-  'renewable energy',
-  'solar power',
-  'environment',
-  'climate change',
-  'green energy',
-  'extinction rebellion',
-  'greenhouse gas emissions',
-  'net zero',
-  'climate crisis',
-  'buying-ethically',
-  'rewilding',
-  're-wilding'
+const greenWords = require('./green-words.js');
+
+const urls = [
+  'https://www.theguardian.com/uk/environment',
+  'https://www.theguardian.com/uk/technology',
+  'https://www.theguardian.com/science',
+  'https://www.bbc.co.uk/news',
+  'https://www.bbc.co.uk/news/technology',
+  'https://www.bbc.co.uk/news/science_and_environment'
+  // 'https://www.dailymail.co.uk/home/index.html'
 ];
 
-https.get(url, (resp) => {
-  let data = '';
+const scrapeData = (url) => {
+  return new Promise(function(resolve, reject) {
+    https.get(url, (res) => {
+      let data = '';
 
-  // a data chunk has been received.
-  resp.on('data', (chunk) => {
-    data += chunk;
+      // a data chunk has been received.
+      res.on('data', (chunk) => data += chunk);
+
+      // complete response has been received.
+      res.on('end', () => resolve(data));
+    }).on('error', (err) => {
+      console.log('Error: ' + err.message);
+      return reject(err.message);
+    });
   });
+};
 
-  // complete response has been received.
-  resp.on('end', () => {
-    searchForArticles(data);
-  });
-
-}).on('error', (err) => {
-  console.log('Error: ' + err.message);
-});
-
-const searchForArticles = (html) => {
+const searchForArticles = (html, baseUrl) => {
   const articles = $('a', html)
     .get()
     .filter(el => greenWords.some(word => $(el).text().toLowerCase().includes(word)));
 
-  const articleLinks = articles.map((el, i) => $(el).attr('href'))
+  const articleLinks = articles.map((el, i) => $(el).attr('href'));
 
-  // const articleData = articles
-  //   .map((el, i) => ({
-  //     href: $(el).attr('href'),
-  //     title: $(el).text()
-  //   }));
-
-
-  const onlyTheLinksWithFullURL = articleLinks
-    .filter(link => link.match(/^http/));
+  // const onlyTheLinksWithFullURL = articleLinks;
+  // .filter(link => link.match(/^http/)); // @TODO ADD THIS BACK
 
   // Needed as some links are duplicated onto pages.
-  const uniqueArticleData = [...new Set(onlyTheLinksWithFullURL)]
+  const uniqueArticleData = [...new Set(articleLinks)]
     .map(href => ({
-      href,
-      title: $(articles.find(article => $(article).attr('href') === href)).text()
+        href: new URL(href, baseUrl),
+        title: $(articles.find(article => $(article).attr('href') === href)).text()
     }));
 
-  fs.writeFile('articles.txt', JSON.stringify(uniqueArticleData), (err) => {
-    if (err) return console.log(err);
-
-    console.log('articles.txt updated');
-  });
+  return uniqueArticleData;
 }
+
+Promise.all([...urls.map(url => scrapeData(url))])
+  .then(data => {
+    const allLinks = data
+      .map((html, i) => searchForArticles(html, urls[i]))
+      .reduce((a, b) => a.concat(b), []);
+
+    fs.writeFile('articles.txt', JSON.stringify(allLinks), (err) => {
+      if (err) return console.log(err);
+
+      console.log('articles.txt updated');
+    });
+  })
+  .catch(console.log);
