@@ -105,6 +105,15 @@
   align-items: center;
   cursor: pointer;
   outline-offset: 2px;
+  transition: color 0.2s linear;
+}
+
+.article-upvote:hover {
+  color:#545454;
+}
+
+.article-upvote:hover .arrow-up {
+  border-bottom-color:#545454;
 }
 
 .article-upvote-icon {
@@ -117,6 +126,7 @@
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-bottom: 5px solid #A9A9A9;
+  transition: border-color 0.2s linear;
 }
 
 .visually-hidden {
