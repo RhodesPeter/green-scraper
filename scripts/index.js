@@ -8,8 +8,6 @@ const addArticlesToPage = (articles) => {
     .map((articleData, index) => {
       const source = new URL(articleData.href, location).hostname;
 
-      // Need visually hidden 'up vote' and 'down vote' text inside the buttons
-
       return `
         <li class="article-li">
           <div class="article-left-col">

@@ -15,7 +15,9 @@ const greenWords = [
   're-wilding',
   'co2 emissions',
   'rainforest',
-  'windfarm'
+  'windfarm',
+  'wildlife conservation',
+  'biodiversity'
 ];
 
 module.exports = greenWords;
