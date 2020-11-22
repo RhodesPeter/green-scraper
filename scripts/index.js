@@ -14,7 +14,7 @@ const addArticlesToPage = (articles) => {
             <p class="article-li-number">${index + 1}.</p>
           </div>
           <div class="article-right-col">
-            <a class="article-link" href="${articleData.href}">${articleData.title}</a>
+            <a class="article-link" href="${articleData.href}"><span class="article-link__underline-wrapper">${articleData.title}</span></a>
             <div class="article-link-details">
               <p class="article-source">${source}</p>
               <p class="article-divide">|</p>
