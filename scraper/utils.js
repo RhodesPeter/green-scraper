@@ -1,13 +1,15 @@
-/* Randomize array in-place using Durstenfeld shuffle algorithm */
+/* Randomize array using Durstenfeld shuffle algorithm */
 const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
+    const copy = [...array];
+
+    for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        const temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+        const temp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = temp;
     }
 
-    return array;
+    return copy;
 }
 
 module.exports = { shuffleArray }
