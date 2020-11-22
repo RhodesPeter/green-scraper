@@ -13,17 +13,24 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: helvetica;
 }
 
 .top-nav {
-  background-color: #20639B;
+  background-color: #3CAEA3;
   padding: 12px 16px;
   color: white;
   font-size: 24px;
   line-height: 1;
-  font-family: helvetica;
   position: sticky;
   top: 0;
+}
+
+.top-nav__link {
+  text-decoration: none;
+  color: white;
+  margin-bottom: 4px;
+  display: inline-block;
 }
 
 .article-ol {
@@ -32,76 +39,84 @@
 }
 
 .article-li {
-  padding-bottom: 6px;
+  padding-bottom: 10px;
   display: flex;
 }
 
 .article-left-col {
-  min-width: 32px;
-  padding-top: 3px;
+  min-width: 28px;
 }
 
 .article-right-col {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
 }
 
 .article-li-number {
   display: inline-block;
+  color: #A9A9A9;
 }
 
 .article-link {
   color: #20639B;
-  border-bottom: 2px solid #20639B;
+  border-bottom: 2px solid transparent;
   text-decoration: none;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1;
   transition: color 0.2s linear, border-color 0.2s linear;
+  outline-offset: 3px;
+  align-self: flex-start;
 }
 
 .article-link:hover,
 .article-link:focus {
   color: #173F5F;
   border-color: #173F5F;
+  border-bottom: 2px solid #20639B;
 }
 
-.article-source {
-  color: #A9A9A9;
-  margin-top: 1px;
+.top-nav__description {
   font-size: 13px;
+  line-height: 1;
 }
 
-.article-vote-button-wrapper {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2px;
-  /* position: absolute;
-  left: 0;
-  top: 24px; */
+.article-source,
+.article-upvote {
+  color: #A9A9A9;
+  font-size: 13px;
+  display: inline-block;
 }
 
-.article-vote-btn {
+
+.article-link-details {
+  line-height: 0;
+}
+
+.article-divide {
+  color: #A9A9A9;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.article-upvote {
   background-color: transparent;
   border: 0;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  outline-offset: 2px;
 }
 
-.article-vote-btn:first-child {
-  margin-bottom: 4px
+.article-upvote-icon {
+  margin-left: 6px;
 }
 
-.arrow-up,
-.arrow-down {
+.arrow-up {
   width: 0;
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-}
-
-.arrow-up {
-  border-bottom: 5px solid #20639B;
-}
-
-.arrow-down {
-  border-top: 5px solid #20639B;
+  border-bottom: 5px solid #A9A9A9;
 }
 
 .visually-hidden {

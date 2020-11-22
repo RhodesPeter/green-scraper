@@ -14,14 +14,14 @@ const addArticlesToPage = (articles) => {
         <li class="article-li">
           <div class="article-left-col">
             <p class="article-li-number">${index + 1}.</p>
-            <div class="article-vote-button-wrapper">
-              <button class="article-vote-btn arrow-up"><span class="visually-hidden">up vote</span></button>
-              <button class="article-vote-btn arrow-down"><span class="visually-hidden">down vote</span></button>
-            </div>
           </div>
           <div class="article-right-col">
             <a class="article-link" href="${articleData.href}">${articleData.title}</a>
-            <p class="article-source">${source}</p>
+            <div class="article-link-details">
+              <p class="article-source">${source}</p>
+              <p class="article-divide">|</p>
+              <button class="article-upvote">upvote <div class="arrow-up article-upvote-icon"></div></button>
+            </div>
           </div>
         </li>
       `;
