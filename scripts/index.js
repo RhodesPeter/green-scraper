@@ -19,6 +19,8 @@ const addArticlesToPage = (articles) => {
               <p class="article-source">${source}</p>
               <p class="article-divide">|</p>
               <button class="article-upvote">upvote <div class="arrow-up article-upvote-icon"></div></button>
+              <p class="article-divide">|</p>
+              <p class="article-votes">0 votes</p>
             </div>
           </div>
         </li>

@@ -81,7 +81,8 @@
 }
 
 .article-source,
-.article-upvote {
+.article-upvote,
+.article-votes {
   color: #A9A9A9;
   font-size: 13px;
   display: inline-block;
